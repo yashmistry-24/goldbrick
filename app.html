@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoldBrick - Crafting Timeless Luxury</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --gold-primary: #D4AF37;
+            --gold-secondary: #F5D98F;
+            --gold-dark: #996515;
+            --white-bg: #FFFFFF;
+            --light-gray: #F8F8F8;
+            --dark-text: #333333;
+            --medium-text: #666666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--white-bg);
+            color: var(--dark-text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 30px;
+            z-index: 1000;
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-link {
+            color: var(--medium-text);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--gold-primary);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--gold-primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link {
+            color: black !important;
+        }
+
+        .nav-link:hover {
+            color: black !important;
+        }
+
+        .hero-title {
+            color: black !important;
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            background-clip: unset !important;
+        }
+
+        .hero-subtitle {
+            color: black !important;
+        }
+
+        .learn-more-btn {
+            color: black !important;
+            border-color: black !important;
+        }
+
+        .learn-more-btn:hover {
+            background: rgba(0, 0, 0, 0.05) !important;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* Social Icons */
+        .social-icons {
+            position: fixed;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            z-index: 100;
+        }
+        
+        .social-icon {
+            color: var(--medium-text);
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            color: var(--gold-primary);
+            transform: scale(1.2);
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Background Slideshow */
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .bg-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            filter: blur(3px);
+        }
+        
+        .bg-slide.active {
+            opacity: 0.5;
+        }
+        
+        .logo-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            width: 300px;
+            height: auto;
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
+        }
+        
+        .gold-particle {
+            position: absolute;
+            background-color: var(--gold-primary);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, var(--gold-dark), var(--gold-primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            opacity: 0;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 400;
+            max-width: 700px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--medium-text);
+            opacity: 0;
+        }
+        
+        .learn-more-btn {
+            padding: 15px 40px;
+            background: transparent;
+            color: var(--gold-primary);
+            border: 1px solid var(--gold-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            border-radius: 30px;
+        }
+        
+        .learn-more-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+        }
+        
+        .learn-more-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .learn-more-btn:hover::before {
+            left: 100%;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold-primary);
+            font-size: 24px;
+            animation: bounce 2s infinite;
+        }
+
+        #music-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--gold-primary);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            color: white;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease;
+        }
+
+        #music-toggle:hover {
+            background-color: var(--gold-dark);
+        }
+
+        #why-goldbrick .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+                
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+        
+        /* Sections */
+        .section {
+            padding: 120px 50px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        #about {
+            background-color: var(--white-bg);
+        }
+        
+        #projects {
+            background-color: var(--light-gray);
+        }
+        
+        #contact {
+            background-color: var(--white-bg);
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            color: var(--gold-primary);
+        }
+        
+        /* Property Showcase */
+        .property-showcase {
+            padding: 80px 0;
+        }
+        
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 50px;
+        }
+        
+        .property-card {
+            background: var(--white-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            transform: translateY(50px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .property-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.1);
+        }
+        
+        .property-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .property-info {
+            padding: 25px;
+        }
+        
+        .property-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--gold-primary);
+        }
+        
+        .property-location {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--medium-text);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .property-location i {
+            color: var(--gold-primary);
+        }
+        
+        .property-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: var(--medium-text);
+        }
+        
+        .view-details {
+            color: var(--gold-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .view-details:hover {
+            color: var(--gold-dark);
+            gap: 10px;
+        }
+        
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--medium-text);
+            line-height: 1.8;
+        }
+        
+        /* Contact Section */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            background: var(--light-gray);
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark-text);
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+        }
+        
+        .submit-btn {
+            background-color: var(--gold-primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: var(--gold-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        .about-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 50px;
+        align-items: flex-start;
+        justify-content: center;
+        }
+
+        .about-text {
+        flex: 1 1 400px;
+        max-width: 600px;
+        font-size: 1.1rem;
+        color: var(--medium-text);
+        line-height: 1.8;
+        }
+
+        .about-text h3 {
+        font-size: 1.5rem;
+        color: var(--gold-primary);
+        margin-bottom: 20px;
+        font-family: 'Playfair Display', serif;
+        }
+
+        .about-services {
+        flex: 1 1 300px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 25px;
+        }
+
+        .service-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-size: 1.1rem;
+        color: var(--dark-text);
+        }
+
+        .service-item i {
+        font-size: 28px;
+        color: var(--gold-primary);
+        }
+
+        /* ------------------------- */
+        /* 📱 Mobile Responsive Styles */
+        /* ------------------------- */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70%;
+                background-color: #fff;
+                padding: 20px;
+                transition: right 0.3s ease-in-out;
+                z-index: 1000;
+                box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar.active {
+                right: 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                font-size: 1.5rem;
+                z-index: 1001;
+            }
+
+            .social-icons {
+                flex-direction: row;
+                justify-content: center;
+                margin-top: 20px;
+                gap: 15px;
+                padding: 10px 0;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+                text-align: center;
+                margin-top: 10px;
+            }
+
+            .section {
+                padding: 40px 20px;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+                text-align: center;
+                margin-bottom: 25px;
+            }
+
+            .property-name {
+                font-size: 1.1rem;
+                text-align: center;
+            }
+
+            .property-description {
+                font-size: 0.9rem;
+                text-align: center;
+            }
+
+            .about-services {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .service-item {
+                font-size: 0.95rem;
+                padding: 10px;
+                text-align: center;
+            }
+
+            .contact-images {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .contact-images img {
+                width: 90%;
+                max-width: 300px;
+                border-radius: 8px;
+                object-fit: cover;
+            }
+
+            .footer-note {
+                text-align: center;
+                font-size: 0.9rem;
+                margin-top: 30px;
+                padding: 10px;
+                color: #555;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            /* Tablet specific styles */
+            .navbar {
+                padding: 25px;
+                gap: 20px;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .section {
+                padding: 100px 30px;
+            }
+            
+            .properties-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .about-container {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+            
+            .about-text {
+                flex: 1;
+            }
+            
+            .about-services {
+                flex: 1;
+            }
+            
+            .contact-images {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .contact-images img {
+                width: calc(50% - 10px);
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            /* Desktop specific styles */
+            .navbar {
+                padding: 30px;
+                gap: 30px;
+            }
+            
+            .hero-title {
+                font-size: 4rem;
+            }
+            
+            .section {
+                padding: 120px 50px;
+            }
+            
+            .about-container {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+            
+            .about-text {
+                flex: 1;
+            }
+            
+            .about-services {
+                flex: 1;
+            }
+            
+            .contact-images {
+                flex-direction: row;
+                justify-content: center;
+            }
+            
+            .contact-images img {
+                width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#contact" class="nav-link">Get in Touch</a>
+    </nav>
+    
+    <!-- Social Media Icons -->
+    <div class="social-icons">
+        <a href="http://instagram.com/goldbrickenterprise/" target="_blank" class="social-icon">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.youtube.com/@goldbrickproperties" target="_blank" class="social-icon">
+            <i class="fab fa-youtube"></i>
+        </a>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- Background Slideshow -->
+        <div class="hero-bg">
+            <div class="bg-slide active" style="background-image: url('asset/image1.jpg')"></div>
+            <div class="bg-slide" style="background-image: url('asset/image2.jpeg')"></div>
+            <div class="bg-slide" style="background-image: url('asset/image3.jpg')"></div>
+        </div>
+        
+        <div class="logo-container">
+            <img src="asset/goldbrick.png" alt="GoldBrick" class="logo">
+        </div>
+        <h1 class="hero-title" id="hero-title"></h1>
+        <p class="hero-subtitle" id="hero-subtitle"></p>
+        <a href="#about" class="learn-more-btn">LEARN MORE</a>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        
+        <!-- Gold particles will be generated here by JS -->
+    </section>
+    
+    <!-- About Section -->
+    <section class="section" id="about">
+        <h2 class="section-title">About GoldBrick</h2>
+        <div class="about-content">
+            <!-- <p>With over 8+ years of experience in real estate, GoldBrick has become a trusted name in Boisar and Palghar districts. Renowned for delivering some of the region’s finest residential projects, we also specialize in rentals, commercial shops, industrial and residential land, as well as resale properties.</p> -->
+            <!-- <p> Our deep local knowledge and commitment to quality allow us to offer taiored solutions that meet the diverse needs of our clients, whether they’re first-time buyers or seasoned investors.</p> -->
+            <div class="about-container">
+            <div class="about-text">
+                <p>
+                With over 8+ years of experience in real estate and ISO 9001-2015 CERTIFIED, GoldBrick has become a trusted name in Boisar and Palghar districts. Renowned for delivering some of the region’s finest residential projects, we also specialize in rentals, commercial shops, industrial and residential land, as well as resale properties.
+                </p>
+                
+                <p>GoldBrick offers you an experience of a lifetime.</p>
+            </div>
+
+            <div class="about-services">
+                <div class="service-item">
+                <i class="fas fa-home"></i>
+                <p>Residences</p>
+                </div>
+                <div class="service-item">
+                <i class="fas fa-key"></i>
+                <p>Rentals</p>
+                </div>
+                <div class="service-item">
+                <i class="fas fa-store"></i>
+                <p>Commercial Shops</p>
+                </div>
+                <div class="service-item">
+                <i class="fas fa-map-marked-alt"></i>
+                <p>Industrial / Residential Land</p>
+                </div>
+                <div class="service-item">
+                <i class="fas fa-sync-alt"></i>
+                <p>Resale Properties</p>
+                </div>
+            </div>
+            </div>
+
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section class="section" id="projects">
+        <h2 class="section-title">Projects</h2>
+        <div class="property-showcase">
+            <div class="properties-grid">
+                <div class="property-card">
+                    <img src="asset/agami_infinity_park.png" alt="Agami Infinity Park" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">Agami Infinity Park</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Boisar East</p>
+                        <p class="property-description">Modern apartments with breathtaking views, premium finishes, and thoughtfully designed living spaces.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+                
+                <div class="property-card">
+                    <img src="asset/VBHC_rowland_park.png" alt="VBHC 47 Rowland Park" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">VBHC 47 Rowland Park</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar East</p>
+                        <p class="property-description">Contemporary homes with sleek architecture, spacious interiors, and an elevated sense of comfort.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+                
+                <div class="property-card">
+                    <img src="asset/jeevika_heights.png" alt="Jeevika Heights" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">Jeevika Heights</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar East</p>
+                        <p class="property-description">Elegant residences with refined materials, ambient lighting, and seamless indoor-outdoor transitions.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/philia_square.png" alt="Philia Square" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">Philia Square</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar West</p>
+                        <p class="property-description">Stylish living spaces with custom detailing, expansive windows, and natural light throughout.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/krish_mansion.png" alt="Krish Mansion" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">Krish Mansion</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar West</p>
+                        <p class="property-description">Sophisticated apartments with clean finishes, open layouts, and calming neutral tones.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/fia_orion.png" alt="FIA ORION GRANDE" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">FIA ORION GRANDE</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar East</p>
+                        <p class="property-description">Well-designed homes featuring modern textures, smart layouts, and enduring craftsmanship.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/aishani_royale.png" alt="Aishani Royale" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">Aishani Royale</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar West</p>
+                        <p class="property-description">Premium residences with airy balconies, artistic interiors, and a refined urban vibe.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/fia_florenza.png" alt="FIA FLORENZA" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">FIA FLORENZA</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar West</p>
+                        <p class="property-description">Minimalist apartments offering serene environments, contemporary materials, and functional beauty.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/paarshvanath.png" alt="Paarshvanath Labh" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">Paarshvanath Labh</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar East</p>
+                        <p class="property-description">Chic modern homes with intuitive floor plans, warm finishes, and soft architectural curves.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/fia_enclave.png" alt="FIA ENCLAVE" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">FIA ENCLAVE</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar West</p>
+                        <p class="property-description">Signature living spaces crafted for elegance, tranquility, and urban sophistication.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/fia_enigma.png" alt="FIA ENIGMA" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">FIA ENIGMA</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar West</p>
+                        <p class="property-description">Luxury apartments with soft color palettes, panoramic views, and quiet elegance.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/fia_eklavya.png" alt="FIA EKLAVYA" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">FIA EKLAVYA</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar West</p>
+                        <p class="property-description">Thoughtfully curated homes with clean lines, generous light, and architectural charm.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/osian_royale.png" alt="Osian Royale" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">Osian Royale</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar East</p>
+                        <p class="property-description">Urban-inspired apartments with elegant design, fresh aesthetics, and tailored features.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/ghodela_park.png" alt="Ghodela Park View" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">Ghodela Park View</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar West</p>
+                        <p class="property-description">Modern spaces with timeless interiors, refined edges, and quality in every detail.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/jade_gardens.png" alt="Jade Gardens" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">Jade Gardens</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar West</p>
+                        <p class="property-description">Premium homes designed for comfort, visual harmony, and lasting appeal.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/prithvi_complex.png" alt="Prithvi Complex" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">Prithvi Complex</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar East</p>
+                        <p class="property-description">Impeccably finished residences with warm textures, airy layouts, and stylish accents.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/7Star_horizon.png" alt="7Star Horizon" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">7Star Horizon</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Boisar East</p>
+                        <p class="property-description">Architectural homes that balance simplicity, luxury, and thoughtful proportions.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/parasnath_garden.png" alt="Parasnath Garden" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">Parasnath Garden</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Umroli East</p>
+                        <p class="property-description">Elegant interiors with curated materials, quiet sophistication, and balanced geometry.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/shree_salasar.png" alt="Shree Salasar RowVillas" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">Shree Salasar RowVillas</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Palghar West</p>
+                        <p class="property-description">Contemporary homes with fine details, calming tones, and expansive spatial flow.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <img src="asset/solitaire_heights.png" alt="Solitaire Heights" class="property-image">
+                    <div class="property-info">
+                        <h3 class="property-name">Solitaire Heights</h3>
+                        <p class="property-location"><i class="fas fa-map-marker-alt"></i>Boisar West</p>
+                        <p class="property-description">Inviting apartments with modern elegance, crafted symmetry, and smooth functionality.</p>
+                        <!-- <a href="#" class="view-details">View Details <i class="fas fa-arrow-right"></i></a> -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    
+    <!-- Why GoldBrick Section -->
+    <section class="section" id="why-goldbrick">
+        <h2 class="section-title">Why GoldBrick?</h2>
+        <div class="about-container">
+            <!-- Left Side: Description -->
+            <div class="about-text">
+                <p>
+                    At GoldBrick, we go beyond just providing properties — we offer trust, transparency, and support every step of the way. Whether you're a first-time buyer or a seasoned investor, here's why GoldBrick is your ideal real estate partner.
+                </p>
+                <p>
+                    We’re committed to delivering quality-certified housing solutions backed by recognized standards and regulations. Our expert team ensures hassle-free transactions, government scheme guidance, and complete post-sale support.
+                </p>
+            </div>
+
+            <!-- Right Side: Feature List -->
+            <div class="about-services">
+                <div class="service-item">
+                    <i class="fas fa-certificate"></i>
+                    <p>ISO 9001-2015 Certified</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-id-card-alt"></i>
+                    <p>MahaRERA Registered</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-hand-holding-usd"></i>
+                    <p>Estate, Investment & Loan Assistance</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-user-shield"></i>
+                    <p>Support with Pradhan Mantri Awas Yojana</p>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-car-side"></i>
+                    <p>Pick & Drop Site Visit Service</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+        <h2 class="section-title">Get in Touch</h2>
+
+        <!-- Image Row -->
+        <div class="contact-images" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 40px;">
+            <img src="asset/goldbrick boisar card.jpg" alt="GoldBrick Boisar Card" style="width: 500px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            <img src="asset/goldbrick palghar card.png" alt="GoldBrick Palghar Card" style="width: 500px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+        </div>
+
+        <!-- Paragraph Text -->
+        <div class="contact-text" style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <p style="font-size: 1.1rem; color: var(--medium-text); line-height: 1.8;">
+                We’re just a call or visit away! Our offices in Boisar and Palghar are always open to help you explore your ideal home, investment, or property solution.
+            </p>
+            <br>
+            <p style="font-size: 1.1rem; color: var(--medium-text); line-height: 1.8;">
+                Whether you're looking for your dream home, a smart investment, or expert guidance in real estate, GoldBrick is here to help. With dedicated offices in Boisar and Palghar, our team offers personalized assistance tailored to your needs.
+                <br><br>
+                Visit us today and experience the GoldBrick commitment — where your vision becomes our mission.
+            </p>
+        </div>
+    </section>
+
+    <!-- Closing Section -->
+    <section class="section" style="text-align: center; padding: 60px 20px; background-color: #f9f9f9;">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--gold-primary); margin-bottom: 20px;">
+            Thank You for Visiting
+        </h2>
+        <p style="font-size: 1.1rem; color: var(--medium-text); max-width: 700px; margin: 0 auto; line-height: 1.8;">
+            We appreciate your time and interest in GoldBrick. Whether you're planning to buy your dream home, invest in a promising project, or simply explore opportunities, we're here to guide you every step of the way.
+            <br><br>
+            Stay connected with us for the latest updates, projects, and personalized assistance. Let’s build a better future — together.
+        </p>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollToPlugin.min.js"></script>
+
+    <script>
+        // Initialize GSAP and ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Background Slideshow
+        const bgSlides = document.querySelectorAll('.bg-slide');
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            bgSlides.forEach(slide => slide.classList.remove('active'));
+            bgSlides[index].classList.add('active');
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % bgSlides.length;
+            showSlide(currentSlide);
+        }
+        
+        // Start slideshow (change every 3 seconds)
+        showSlide(0);
+        setInterval(nextSlide, 3000);
+        
+        // Logo animation
+        gsap.from(".logo", {
+            duration: 1.5,
+            scale: 0.5,
+            opacity: 0,
+            ease: "back.out(1.7)"
+        });
+        
+        // Text animations
+        gsap.to(".hero-title", {
+            duration: 1,
+            opacity: 1,
+            y: -20,
+            delay: 0.5,
+            ease: "power2.out"
+        });
+        
+        gsap.to(".hero-subtitle", {
+            duration: 1,
+            opacity: 1,
+            y: -20,
+            delay: 0.8,
+            ease: "power2.out"
+        });
+        
+        gsap.to(".learn-more-btn", {
+            duration: 1,
+            opacity: 1,
+            y: -20,
+            delay: 1.1,
+            ease: "power2.out"
+        });
+        
+        // Gold particles animation
+        function createParticles() {
+            const hero = document.querySelector('.hero');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('gold-particle');
+                
+                // Random properties
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * window.innerWidth;
+                const posY = Math.random() * window.innerHeight;
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 10 + 10;
+                const opacity = Math.random() * 0.5 + 0.1;
+                
+                // Apply properties
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}px`;
+                particle.style.top = `${posY}px`;
+                particle.style.opacity = opacity;
+                
+                // Add to DOM
+                hero.appendChild(particle);
+                
+                // Animate
+                gsap.to(particle, {
+                    y: -100,
+                    x: Math.random() * 100 - 50,
+                    duration: duration,
+                    delay: delay,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+            }
+        }
+        
+        // Property card animations
+        gsap.utils.toArray(".property-card").forEach((card, i) => {
+            ScrollTrigger.create({
+                trigger: card,
+                start: "top 80%",
+                onEnter: () => {
+                    gsap.to(card, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        delay: i * 0.1,
+                        ease: "back.out(1.7)"
+                    });
+                }
+            });
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    gsap.to(window, {
+                        duration: 1,
+                        scrollTo: {
+                            y: targetElement,
+                            offsetY: 80,
+                            autoKill: false
+                        },
+                        ease: "power2.inOut"
+                    });
+                }
+            });
+        });
+        
+        // Initialize
+        // Typing Effect
+        function typeText(element, text, speed = 50, callback) {
+            let index = 0;
+            function typeChar() {
+                if (index < text.length) {
+                    element.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(typeChar, speed);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            typeChar();
+        }
+
+        // Animate title and subtitle typing
+        document.addEventListener('DOMContentLoaded', () => {
+            const titleEl = document.getElementById("hero-title");
+            const subtitleEl = document.getElementById("hero-subtitle");
+
+            const titleText = "Building Trust, One Brick at a Time";
+            const subtitleText = "We have the best projects in Boisar, Palghar and Umroli🏠, GoldBrick offers you an experience of a lifetime.";
+
+            typeText(titleEl, titleText, 70, () => {
+                setTimeout(() => {
+                    typeText(subtitleEl, subtitleText, 30);
+                }, 400); // delay before subtitle
+            });
+
+            createParticles();
+        });
+        
+        // Music Play/Pause Toggle Logic
+        document.addEventListener("DOMContentLoaded", function () {
+            const bgMusic = document.getElementById("bg-music");
+            const toggleBtn = document.getElementById("music-toggle");
+            const icon = toggleBtn.querySelector("i");
+
+            // Ensure music starts if allowed
+            bgMusic.play().catch(() => {
+                console.warn("Autoplay blocked. Music will play after user interaction.");
+            });
+
+            toggleBtn.addEventListener("click", function () {
+                if (bgMusic.paused) {
+                    bgMusic.play();
+                    icon.classList.remove("fa-volume-mute");
+                    icon.classList.add("fa-volume-up");
+                } else {
+                    bgMusic.pause();
+                    icon.classList.remove("fa-volume-up");
+                    icon.classList.add("fa-volume-mute");
+                }
+            });
+        });
+
+    </script>
+
+    <audio id="bg-music" loop autoplay>
+        <source src="asset/music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Music Toggle Button -->
+    <button id="music-toggle" title="Toggle Music">
+        <i class="fas fa-volume-up"></i>
+    </button>
+
+</body>
+</html>
