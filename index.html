@@ -131,6 +131,16 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
+        /* Call specific styles */
+        .social-icon.call {
+            background: #1f8bde; /* WhatsApp green for consistency */
+        }
+
+        /* WhatsApp specific styles */
+        .social-icon.whatsapp {
+            background: #25D366;
+        }
+
         /* Instagram specific styles */
         .social-icon.instagram {
             background: radial-gradient(circle at 30% 107%, 
@@ -948,6 +958,12 @@
     
     <!-- Social Media Icons -->
     <div class="social-icons">
+        <a href="tel:+918828869288" class="social-icon call">
+            <i class="fas fa-phone"></i>
+        </a>
+        <a href="https://wa.me/918828869288" class="social-icon whatsapp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
         <a href="http://instagram.com/goldbrickenterprise/" target="_blank" class="social-icon instagram">
             <i class="fab fa-instagram"></i>
         </a>
