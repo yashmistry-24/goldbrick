@@ -112,16 +112,56 @@
             gap: 25px;
             z-index: 100;
         }
-        
+
         .social-icon {
-            color: var(--medium-text);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 20px;
             transition: all 0.3s ease;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
-        
+
         .social-icon:hover {
-            color: var(--gold-primary);
-            transform: scale(1.2);
+            transform: scale(1.2) translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Instagram specific styles */
+        .social-icon.instagram {
+            background: radial-gradient(circle at 30% 107%, 
+                #fdf497 0%, 
+                #fdf497 5%, 
+                #fd5949 45%, 
+                #d6249f 60%, 
+                #285AEB 90%);
+        }
+
+        /* YouTube specific styles */
+        .social-icon.youtube {
+            background: #ff0000;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .social-icons {
+                flex-direction: row;
+                left: 50%;
+                transform: translateX(-50%);
+                top: auto;
+                bottom: 20px;
+                gap: 20px;
+            }
+            
+            .social-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 22px;
+            }
         }
         
         /* Hero Section */
@@ -908,10 +948,10 @@
     
     <!-- Social Media Icons -->
     <div class="social-icons">
-        <a href="http://instagram.com/goldbrickenterprise/" target="_blank" class="social-icon">
+        <a href="http://instagram.com/goldbrickenterprise/" target="_blank" class="social-icon instagram">
             <i class="fab fa-instagram"></i>
         </a>
-        <a href="https://www.youtube.com/@goldbrickproperties" target="_blank" class="social-icon">
+        <a href="https://www.youtube.com/@goldbrickproperties" target="_blank" class="social-icon youtube">
             <i class="fab fa-youtube"></i>
         </a>
     </div>
